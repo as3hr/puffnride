@@ -7,6 +7,7 @@ import 'package:oncab/screens/EarningScreen.dart';
 import 'package:oncab/screens/EditProfileScreen.dart';
 import 'package:oncab/screens/DriverDashboardScreen.dart';
 import 'package:oncab/screens/SupScreen.dart';
+import 'package:oncab/utils/Colors.dart';
 
 void main() {
   runApp(MyApp());
@@ -57,7 +58,7 @@ class _BottomScreenState extends State<BottomScreen> {
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
         decoration: BoxDecoration(
-          color: const Color(0xFF462FAB),
+          color: primaryColor,
           borderRadius: BorderRadius.circular(19),
           boxShadow: [
             BoxShadow(

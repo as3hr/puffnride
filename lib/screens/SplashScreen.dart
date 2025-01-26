@@ -51,48 +51,46 @@ class SplashScreenState extends State<SplashScreen> {
 
     await Future.delayed(Duration(seconds: 2));
 
-    launchScreen(context, BottomScreen(),
-        pageRouteAnimation: PageRouteAnimation.SlideBottomTop, isNewTask: true);
-    // if (sharedPref.getBool(IS_FIRST_TIME) ?? true) {
-    //   await Geolocator.requestPermission().then((value) async {
-    //     await Geolocator.getCurrentPosition().then((value) {
-    //       sharedPref.setDouble(LATITUDE, value.latitude);
-    //       sharedPref.setDouble(LONGITUDE, value.longitude);
-    //       _navigateToWalkthroughScreen();
-    //     });
-    //   }).catchError((e) {
-    //     _navigateToWalkthroughScreen();
-    //   });
-    // } else {
-    //   if (sharedPref.getString(CONTACT_NUMBER).validate().isEmptyOrNull &&
-    //       appStore.isLoggedIn) {
-    //     launchScreen(context, EditProfileScreen(isGoogle: true),
-    //         isNewTask: true, pageRouteAnimation: PageRouteAnimation.Slide);
-    //   } else if (sharedPref.getString(UID).validate().isEmptyOrNull &&
-    //       appStore.isLoggedIn) {
-    //     updateProfileUid().then((value) {
-    //       if (sharedPref.getInt(IS_Verified_Driver) == 1) {
-    //         launchScreen(context, BottomScreen(),
-    //             isNewTask: true, pageRouteAnimation: PageRouteAnimation.Slide);
-    //       } else {
-    //         launchScreen(context, DocumentsScreen(isShow: true),
-    //             isNewTask: true, pageRouteAnimation: PageRouteAnimation.Slide);
-    //       }
-    //     });
-    //   } else if (sharedPref.getInt(IS_Verified_Driver) == 0 &&
-    //       appStore.isLoggedIn) {
-    //     launchScreen(context, DocumentsScreen(isShow: true),
-    //         pageRouteAnimation: PageRouteAnimation.Slide, isNewTask: true);
-    //   } else if (sharedPref.getInt(IS_Verified_Driver) == 1 &&
-    //       appStore.isLoggedIn) {
-    //     launchScreen(context, BottomScreen(),
-    //         pageRouteAnimation: PageRouteAnimation.SlideBottomTop,
-    //         isNewTask: true);
-    //   } else {
-    //     launchScreen(context, SignInScreen(),
-    //         pageRouteAnimation: PageRouteAnimation.Slide, isNewTask: true);
-    //   }
-    // }
+    if (sharedPref.getBool(IS_FIRST_TIME) ?? true) {
+      await Geolocator.requestPermission().then((value) async {
+        await Geolocator.getCurrentPosition().then((value) {
+          sharedPref.setDouble(LATITUDE, value.latitude);
+          sharedPref.setDouble(LONGITUDE, value.longitude);
+          _navigateToWalkthroughScreen();
+        });
+      }).catchError((e) {
+        _navigateToWalkthroughScreen();
+      });
+    } else {
+      if (sharedPref.getString(CONTACT_NUMBER).validate().isEmptyOrNull &&
+          appStore.isLoggedIn) {
+        launchScreen(context, EditProfileScreen(isGoogle: true),
+            isNewTask: true, pageRouteAnimation: PageRouteAnimation.Slide);
+      } else if (sharedPref.getString(UID).validate().isEmptyOrNull &&
+          appStore.isLoggedIn) {
+        updateProfileUid().then((value) {
+          if (sharedPref.getInt(IS_Verified_Driver) == 1) {
+            launchScreen(context, BottomScreen(),
+                isNewTask: true, pageRouteAnimation: PageRouteAnimation.Slide);
+          } else {
+            launchScreen(context, DocumentsScreen(isShow: true),
+                isNewTask: true, pageRouteAnimation: PageRouteAnimation.Slide);
+          }
+        });
+      } else if (sharedPref.getInt(IS_Verified_Driver) == 0 &&
+          appStore.isLoggedIn) {
+        launchScreen(context, DocumentsScreen(isShow: true),
+            pageRouteAnimation: PageRouteAnimation.Slide, isNewTask: true);
+      } else if (sharedPref.getInt(IS_Verified_Driver) == 1 &&
+          appStore.isLoggedIn) {
+        launchScreen(context, BottomScreen(),
+            pageRouteAnimation: PageRouteAnimation.SlideBottomTop,
+            isNewTask: true);
+      } else {
+        launchScreen(context, SignInScreen(),
+            pageRouteAnimation: PageRouteAnimation.Slide, isNewTask: true);
+      }
+    }
   }
 
   void _navigateToWalkthroughScreen() {

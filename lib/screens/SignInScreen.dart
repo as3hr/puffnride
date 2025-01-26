@@ -2,11 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:oncab/screens/DashboardScreen.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:oncab/components/input_field.dart';
 import 'package:oncab/utils/Constants.dart';
 import 'package:oncab/utils/Extensions/StringExtensions.dart';
-import 'package:oncab/utils/Extensions/context_extensions.dart';
-import 'package:oncab/utils/Images.dart';
 import 'package:oncab/screens/BottomScreen.dart';
 
 import '../../main.dart';
@@ -67,97 +66,88 @@ class SignInScreenState extends State<SignInScreen> {
   }
 
   Future<void> logIn() async {
-    print('puffnride');
-
     hideKeyboard(context);
+    launchScreen(context, BottomScreen(),
+        isNewTask: true, pageRouteAnimation: PageRouteAnimation.Slide);
 
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return Center(
-            child:
-                CircularProgressIndicator()); // You can use any widget you want here
-      },
-    );
-    if (formKey.currentState!.validate()) {
-      formKey.currentState!.save();
-      appStore.setLoading(true);
+    // if (formKey.currentState!.validate()) {
+    //   formKey.currentState!.save();
+    //   appStore.setLoading(true);
 
-      Map req = {
-        'contact_number': '${emailController.text.trim()}',
-        'password': passController.text.trim(),
-        "player_id": sharedPref.getString(PLAYER_ID).validate(),
-        'user_type': DRIVER,
-      };
-      print('$req kamal');
-      // await sharedPref.setBool(REMEMBER_ME, mIsCheck);
+    //   Map req = {
+    //     'contact_number': '${emailController.text.trim()}',
+    //     'password': passController.text.trim(),
+    //     "player_id": sharedPref.getString(PLAYER_ID).validate(),
+    //     'user_type': DRIVER,
+    //   };
+    //   print('$req kamal');
+    //   // await sharedPref.setBool(REMEMBER_ME, mIsCheck);
 
-      if (mIsCheck) {
-        await sharedPref.setString(USER_EMAIL, emailController.text);
-        await sharedPref.setString(USER_PASSWORD, passController.text);
-      }
-      await logInApi(req).then((value) async {
-        _userModel = value.data!;
-        await _auth
-            .signInWithEmailAndPassword(
-                email: emailController.text, password: passController.text)
-            .then((value) async {
-          sharedPref.setString(UID, value.user!.uid);
-          updateProfileUid();
-          if (sharedPref.getInt(IS_Verified_Driver) == 1) {
-            await checkPermission().then((value) async {
-              await Geolocator.getCurrentPosition().then((value) {
-                sharedPref.setDouble(LATITUDE, value.latitude);
-                sharedPref.setDouble(LONGITUDE, value.longitude);
-              });
-            });
-            launchScreen(context, BottomScreen(),
-                isNewTask: true, pageRouteAnimation: PageRouteAnimation.Slide);
-          } else {
-            launchScreen(context, DocumentsScreen(isShow: true),
-                isNewTask: true, pageRouteAnimation: PageRouteAnimation.Slide);
-          }
-          appStore.isLoading = false;
-        }).catchError((e) async {
-          if (e.toString().contains('user-not-found')) {
-            authService.signUpWithEmailPassword(
-              context,
-              mobileNumber: _userModel.contactNumber,
-              email: emailController.text,
-              fName: _userModel.firstName,
-              lName: _userModel.lastName,
-              userName: _userModel.username,
-              password: passController.text,
-              userType: DRIVER,
-            );
-          } else {
-            if (sharedPref.getInt(IS_Verified_Driver) == 1) {
-              await checkPermission().then((value) async {
-                await Geolocator.getCurrentPosition().then((value) {
-                  sharedPref.setDouble(LATITUDE, value.latitude);
-                  sharedPref.setDouble(LONGITUDE, value.longitude);
-                });
-              });
-              launchScreen(context, BottomScreen(),
-                  isNewTask: true,
-                  pageRouteAnimation: PageRouteAnimation.Slide);
-            } else {
-              launchScreen(context, DocumentsScreen(isShow: true),
-                  isNewTask: true,
-                  pageRouteAnimation: PageRouteAnimation.Slide);
-            }
-          }
-          log('${e.toString()}');
-          log(e.toString());
-        });
-      }).catchError((error) {
-        appStore.setLoading(false);
+    //   if (mIsCheck) {
+    //     await sharedPref.setString(USER_EMAIL, emailController.text);
+    //     await sharedPref.setString(USER_PASSWORD, passController.text);
+    //   }
+    //   await logInApi(req).then((value) async {
+    //     _userModel = value.data!;
+    //     await _auth
+    //         .signInWithEmailAndPassword(
+    //             email: emailController.text, password: passController.text)
+    //         .then((value) async {
+    //       sharedPref.setString(UID, value.user!.uid);
+    //       updateProfileUid();
+    //       if (sharedPref.getInt(IS_Verified_Driver) == 1) {
+    //         await checkPermission().then((value) async {
+    //           await Geolocator.getCurrentPosition().then((value) {
+    //             sharedPref.setDouble(LATITUDE, value.latitude);
+    //             sharedPref.setDouble(LONGITUDE, value.longitude);
+    //           });
+    //         });
+    //         launchScreen(context, BottomScreen(),
+    //             isNewTask: true, pageRouteAnimation: PageRouteAnimation.Slide);
+    //       } else {
+    //         launchScreen(context, DocumentsScreen(isShow: true),
+    //             isNewTask: true, pageRouteAnimation: PageRouteAnimation.Slide);
+    //       }
+    //       appStore.isLoading = false;
+    //     }).catchError((e) async {
+    //       if (e.toString().contains('user-not-found')) {
+    //         authService.signUpWithEmailPassword(
+    //           context,
+    //           mobileNumber: _userModel.contactNumber,
+    //           email: emailController.text,
+    //           fName: _userModel.firstName,
+    //           lName: _userModel.lastName,
+    //           userName: _userModel.username,
+    //           password: passController.text,
+    //           userType: DRIVER,
+    //         );
+    //       } else {
+    //         if (sharedPref.getInt(IS_Verified_Driver) == 1) {
+    //           await checkPermission().then((value) async {
+    //             await Geolocator.getCurrentPosition().then((value) {
+    //               sharedPref.setDouble(LATITUDE, value.latitude);
+    //               sharedPref.setDouble(LONGITUDE, value.longitude);
+    //             });
+    //           });
+    //           launchScreen(context, BottomScreen(),
+    //               isNewTask: true,
+    //               pageRouteAnimation: PageRouteAnimation.Slide);
+    //         } else {
+    //           launchScreen(context, DocumentsScreen(isShow: true),
+    //               isNewTask: true,
+    //               pageRouteAnimation: PageRouteAnimation.Slide);
+    //         }
+    //       }
+    //       log('${e.toString()}');
+    //       log(e.toString());
+    //     });
+    //   }).catchError((error) {
+    //     appStore.setLoading(false);
 
-        toast(error.toString());
-        log('${error.toString()}');
-      });
-    }
+    //     toast(error.toString());
+    //     log('${error.toString()}');
+    //   });
+    // }
   }
 
   Future<void> appSetting() async {
@@ -206,8 +196,8 @@ class SignInScreenState extends State<SignInScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('images/bg.jpg'), // Path to your image
-            fit: BoxFit.cover, // Adjust the image fit
+            image: AssetImage('images/bg.jpg'),
+            fit: BoxFit.cover,
           ),
         ),
         child: Center(
@@ -224,7 +214,7 @@ class SignInScreenState extends State<SignInScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(17),
                   ),
-                  elevation: 4,
+                  elevation: 7,
                   margin: EdgeInsets.symmetric(horizontal: 17),
                   child: Container(
                     decoration: BoxDecoration(
@@ -244,27 +234,22 @@ class SignInScreenState extends State<SignInScreen> {
                             Text(
                               "Driver Login",
                               style: TextStyle(
-                                fontSize: 24,
+                                fontSize: 27,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
+                                fontFamily:
+                                    GoogleFonts.redHatDisplay().fontFamily,
                               ),
                             ),
                             SizedBox(
                                 height: 16), // Space between heading and input
 
                             // Email input field
-                            TextFormField(
-                              controller: emailController,
-                              decoration: InputDecoration(
-                                labelText: "Email",
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(
-                                      color: Color(
-                                          0xFFA0A0A0)), // border: 1px solid #A0A0A0
-                                ),
-                                prefixIcon: Icon(Icons.email),
-                              ),
+                            InputField(
+                              label: "Email",
+                              onChanged: (val) {},
+                              controller: passController,
+                              hintText: "Enter Your Email or Phone",
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter your email';
@@ -276,22 +261,12 @@ class SignInScreenState extends State<SignInScreen> {
                                 return null;
                               },
                             ),
-                            SizedBox(height: 16),
-
                             // Password input field
-                            TextFormField(
+                            InputField(
+                              label: "Password",
+                              onChanged: (val) {},
                               controller: passController,
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                labelText: "Password",
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(
-                                      color: Color(
-                                          0xFFA0A0A0)), // border: 1px solid #A0A0A0
-                                ),
-                                prefixIcon: Icon(Icons.lock),
-                              ),
+                              hintText: "Enter Your Password",
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter your password';
@@ -302,7 +277,7 @@ class SignInScreenState extends State<SignInScreen> {
                                 return null;
                               },
                             ),
-                            SizedBox(height: 16),
+                            SizedBox(height: 10),
 
                             // Login button with gradient
                             SizedBox(
@@ -340,11 +315,12 @@ class SignInScreenState extends State<SignInScreen> {
                                     constraints: BoxConstraints
                                         .expand(), // Ensures the container fills the button
                                     child: Text(
-                                      "Log In",
+                                      "Login",
                                       style: TextStyle(
                                         color: Colors.white, // White text color
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16,
+                                        fontFamily: "ProximaNova",
                                       ),
                                     ),
                                   ),
@@ -361,22 +337,29 @@ class SignInScreenState extends State<SignInScreen> {
                                   // Handle forgot password
                                 },
                                 child: Text(
-                                  "Forgot Password?",
-                                  style: TextStyle(color: Colors.blue),
+                                  "Forgot Password",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: "ProximaNova",
+                                  ),
                                 ),
                               ),
                             ),
                             RichText(
                               text: TextSpan(
                                 text: "Don't have an account? ",
-                                style:
-                                    TextStyle(fontSize: 14, color: Colors.grey),
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
                                 children: [
                                   TextSpan(
                                     text: "Register",
                                     style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.blue,
+                                      fontSize: 14,
+                                      color: Color(0xff8555AE),
                                     ),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {

@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../../main.dart';
 
-Color primaryColor = Color(0xFF00155f);
+Color primaryColor = Color(0xFF462FAB);
 Color borderColor = Color(0xFFEAEAEA);
 const scaffoldSecondaryDark = Color(0xFF56657C);
-const scaffoldColorDark = Color(0xFF00155f);
+const scaffoldColorDark = Color(0xFF462FAB);
 const scaffoldColorLight = Colors.white;
-const appButtonColorDark = Color(0xFF00155f);
-const dividerColor = Color(0xFF00155f);
-const textPrimaryColor = Color(0xFF00155f);
-const textSecondaryColor = Color(0xFF00155f);
+const appButtonColorDark = Color(0xFF462FAB);
+const dividerColor = Color(0xFF462FAB);
+const textPrimaryColor = Color(0xFF462FAB);
+const textSecondaryColor = Color(0xFF462FAB);
 const viewLineColor = Color(0xFFEAEAEA);
 
 Color appBarBackgroundColorGlobal = Colors.white;

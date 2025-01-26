@@ -18,7 +18,8 @@ class NavigationEndScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: const Color(0xFF1A1B35), // Dark map background
                   image: DecorationImage(
-                    image: const AssetImage('assets/map_dark.png'), // Replace with actual map
+                    image: const AssetImage(
+                        'assets/map_dark.png'), // Replace with actual map
                     fit: BoxFit.cover,
                     colorFilter: ColorFilter.mode(
                       Colors.blue.withOpacity(0.2),
@@ -49,7 +50,8 @@ class NavigationEndScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
-                          icon: const Icon(Icons.arrow_back, color: Colors.white),
+                          icon:
+                              const Icon(Icons.arrow_back, color: Colors.white),
                           onPressed: () => Navigator.pop(context),
                         ),
                         const Text(
@@ -61,7 +63,8 @@ class NavigationEndScreen extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          icon: const Icon(Icons.more_vert, color: Colors.white),
+                          icon:
+                              const Icon(Icons.more_vert, color: Colors.white),
                           onPressed: () {},
                         ),
                       ],
@@ -77,7 +80,8 @@ class NavigationEndScreen extends StatelessWidget {
             child: Container(
               color: const Color(0xFFF5F5F5),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Column(
                   children: [
                     // Details Card
@@ -149,7 +153,8 @@ class NavigationEndScreen extends StatelessWidget {
                             const Divider(),
                             const SizedBox(height: 16),
                             // Payable Amount Row
-                            _buildDetailRow('Payable Amount', '\$55.23', isAmount: true),
+                            _buildDetailRow('Payable Amount', '\$55.23',
+                                isAmount: true),
                           ],
                         ),
                       ),
@@ -157,7 +162,8 @@ class NavigationEndScreen extends StatelessWidget {
                     const Spacer(),
                     // End Ride Button
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 16), // Ensure proper bottom padding
+                      padding: const EdgeInsets.only(
+                          bottom: 16), // Ensure proper bottom padding
                       child: SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(

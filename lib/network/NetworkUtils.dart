@@ -118,4 +118,10 @@ class TokenException implements Exception {
   const TokenException([this.message = ""]);
 
   String toString() => "FormatException: $message";
+
+  void debouncing(Function() callback) {
+    Future.delayed((Duration(seconds: 1)), () {
+      callback.call();
+    });
+  }
 }
