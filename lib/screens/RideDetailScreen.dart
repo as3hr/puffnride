@@ -3,12 +3,12 @@ import 'package:oncab/model/ComplaintModel.dart';
 import 'package:oncab/model/DriverRatting.dart';
 import 'package:oncab/model/RideHistory.dart';
 import 'package:oncab/network/RestApis.dart';
-import 'package:oncab/screens/RideHistoryScreen.dart';
 import 'package:oncab/screens/RidesListScreen.dart';
 import 'package:oncab/utils/Colors.dart';
-import 'package:oncab/utils/Extensions/StringExtensions.dart';
 import 'package:oncab/utils/Extensions/app_common.dart';
 
+import '../components/app_bar_container.dart';
+import '../components/shadow_card.dart';
 import '../main.dart';
 import '../model/CurrentRequestModel.dart';
 import '../model/RiderModel.dart';
@@ -61,225 +61,294 @@ class RideDetailScreenState extends State<RideDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
-      appBar: AppBar(
-        title: Text(
-          "Ride Requests",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.blue, Colors.purple],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-        ),
-        elevation: 0,
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Ride Request Card
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(13),
+      body: Column(
+        children: [
+          AppBarContainer(
+              child: Row(
+            children: [
+              SizedBox(
+                width: 10,
               ),
-              elevation: 4,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.location_on, size: 16, color: Colors.grey),
-                        SizedBox(width: 8),
-                        Text("123 Main St, Cityville",
-                            style: TextStyle(fontSize: 14)),
-                      ],
-                    ),
-                    SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Icon(Icons.flag, size: 16, color: Colors.grey),
-                        SizedBox(width: 8),
-                        Text("456 Oak Ave, Townsburg",
-                            style: TextStyle(fontSize: 14)),
-                      ],
-                    ),
-                    SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.attach_money,
-                                size: 16, color: Colors.grey),
-                            SizedBox(width: 8),
-                            Text("Estimated Fare: \$15.50",
-                                style: TextStyle(fontSize: 14)),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Icon(Icons.timer, size: 16, color: Colors.grey),
-                            SizedBox(width: 8),
-                            Text("ETA: 10 mins",
-                                style: TextStyle(fontSize: 14)),
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    RidesListScreen(), // Replace with your screen class
-                              ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.grey[400],
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 12),
-                            child: Text(
-                              "Accept",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.purple,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 12),
-                            child: Text(
-                              "Decline",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+              Image.asset(
+                'images/menu.png',
+              ),
+              Spacer(),
+              const Text(
+                'Ride Requests',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: "ProximaNova",
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-            SizedBox(height: 16),
-
-            // Accepted Ride Card
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(13),
-              ),
-              elevation: 4,
+              Spacer(),
+            ],
+          )),
+          Expanded(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(13),
-                    ),
-                    child: Image.asset(
-                      'assets/map_sample.png', // Replace with your map image asset
-                      height: 150,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
+                  // Ride Request Card
+                  ShadowCard(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.location_on,
+                                  size: 16, color: Colors.grey),
+                              SizedBox(width: 8),
+                              Text("123 Main St, Cityville",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: "ProximaNova",
+                                  )),
+                            ],
+                          ),
+                          SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Icon(Icons.flag, size: 16, color: Colors.grey),
+                              SizedBox(width: 8),
+                              Text("456 Oak Ave, Townsburg",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: "ProximaNova",
+                                  )),
+                            ],
+                          ),
+                          SizedBox(height: 8),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(Icons.attach_money,
+                                      size: 16, color: Colors.grey),
+                                  SizedBox(width: 8),
+                                  Text("Estimated Fare: \$15.50",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontFamily: "ProximaNova",
+                                      )),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Icon(Icons.timer,
+                                      size: 16, color: Colors.grey),
+                                  SizedBox(width: 8),
+                                  Text("ETA: 10 mins",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontFamily: "ProximaNova",
+                                      )),
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          RidesListScreen(), // Replace with your screen class
+                                    ),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.grey[400],
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 12),
+                                  child: Text(
+                                    "Accept",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: "ProximaNova"),
+                                  ),
+                                ),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {},
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: primaryColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 12),
+                                  child: Text(
+                                    "Decline",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: "ProximaNova",
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
+                  SizedBox(height: 16),
+
+                  // Accepted Ride Card
+                  ShadowCard(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            Icon(Icons.location_on,
-                                size: 16, color: Colors.grey),
-                            SizedBox(width: 8),
-                            Text("789 Elm St, Villagetown",
-                                style: TextStyle(fontSize: 14)),
-                          ],
+                        Container(
+                          height: 200,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF1A1B35),
+                            borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(12),
+                            ),
+                            image: DecorationImage(
+                              image: const AssetImage('images/map_ride.png'),
+                              fit: BoxFit.cover,
+                              colorFilter: ColorFilter.mode(
+                                Colors.blue.withOpacity(0.2),
+                                BlendMode.softLight,
+                              ),
+                            ),
+                          ),
+                          child: Center(
+                              child: ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: Image.asset(
+                              "images/location.png",
+                              color: Colors.blue.withOpacity(0.2),
+                              colorBlendMode: BlendMode.softLight,
+                            ),
+                          )),
                         ),
-                        SizedBox(height: 8),
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 12,
-                              backgroundColor: Colors.grey[300],
-                              child: Icon(
-                                Icons.person,
-                                size: 16,
-                                color: Colors.black,
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(Icons.location_on,
+                                      size: 16, color: Colors.grey),
+                                  SizedBox(width: 8),
+                                  Text("789 Elm St, Villagetown",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontFamily: "ProximaNova")),
+                                ],
                               ),
-                            ),
-                            SizedBox(width: 8),
-                            Text("John Doe", style: TextStyle(fontSize: 14)),
-                          ],
-                        ),
-                        SizedBox(height: 16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            ElevatedButton.icon(
-                              onPressed: () {},
-                              icon: Icon(Icons.call, size: 16),
-                              label: Text("Call"),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.grey[400],
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
+                              SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 12,
+                                    backgroundColor: Colors.grey[300],
+                                    child: Icon(
+                                      Icons.person,
+                                      size: 16,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  SizedBox(width: 8),
+                                  Text("John Doe",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontFamily: "ProximaNova")),
+                                ],
                               ),
-                            ),
-                            ElevatedButton.icon(
-                              onPressed: () {},
-                              icon: Icon(Icons.message, size: 16),
-                              label: Text("Message"),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.grey[400],
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
+                              SizedBox(height: 16),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ElevatedButton.icon(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.call,
+                                      size: 16,
+                                      color: Colors.white,
+                                    ),
+                                    label: Text(
+                                      "Call",
+                                      style: TextStyle(
+                                        fontFamily: "ProximaNova",
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.grey[400],
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                    ),
+                                  ),
+                                  ElevatedButton.icon(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.message,
+                                      size: 16,
+                                      color: Colors.white,
+                                    ),
+                                    label: Text(
+                                      "Message",
+                                      style: TextStyle(
+                                        fontFamily: "ProximaNova",
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.grey[400],
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                    ),
+                                  ),
+                                  ElevatedButton.icon(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.navigation,
+                                      size: 16,
+                                      color: Colors.white,
+                                    ),
+                                    label: Text(
+                                      "Navigate",
+                                      style: TextStyle(
+                                        fontFamily: "ProximaNova",
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: primaryColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            ElevatedButton.icon(
-                              onPressed: () {},
-                              icon: Icon(Icons.navigation, size: 16),
-                              label: Text("Navigate"),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.purple,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -287,8 +356,8 @@ class RideDetailScreenState extends State<RideDetailScreen> {
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

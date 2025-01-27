@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:oncab/components/app_bar_container.dart';
+import 'package:oncab/components/shadow_card.dart';
+import 'package:oncab/utils/Colors.dart';
 
 import '../main.dart';
 import '../model/EarningListModelWeek.dart';
@@ -59,162 +62,184 @@ class EarningScreenState extends State<EarningScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF5A3FFF),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
-          'Earnings',
-          style: TextStyle(color: Colors.white),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.more_vert),
-            onPressed: () {},
+      body: Column(
+        children: [
+          AppBarContainer(
+              child: Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () => Navigator.pop(context),
+              ),
+              Spacer(),
+              const Text(
+                'Earnings',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "ProximaNova",
+                ),
+              ),
+              Spacer(),
+              IconButton(
+                  icon: const Icon(Icons.more_vert),
+                  onPressed: () {},
+                  color: Colors.white),
+            ],
+          )),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  bottom: 80,
+                  top: 16,
+                  left: 16,
+                  right: 16,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Today's Earnings",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        fontFamily: "ProximaNova",
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    ShadowCard(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          children: [
+                            _buildEarningRow("Total Earnings", "\$1,250"),
+                            const SizedBox(height: 16),
+                            _buildEarningRow("Rides Completed", "8"),
+                            const SizedBox(height: 16),
+                            _buildEarningRow("Hours Online", "6.5"),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    const Text(
+                      "Recent Rides",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "ProximaNova",
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    _buildRideCard("Ride #1234", "Today, 14:30", "\$180"),
+                    const SizedBox(height: 8),
+                    _buildRideCard("Ride #1233", "Today, 12:15", "\$150"),
+                    const SizedBox(height: 24),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () =>
+                                setState(() => isWeeklySelected = true),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: isWeeklySelected
+                                  ? primaryColor
+                                  : Color(0xff9C9B9F),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 12),
+                              child: Text(
+                                'Weekly',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () =>
+                                setState(() => isWeeklySelected = false),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: !isWeeklySelected
+                                  ? primaryColor
+                                  : Color(0xff9C9B9F),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 12),
+                              child: Text(
+                                'Monthly',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    ShadowCard(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "This Week",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "ProximaNova",
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            _buildEarningRow("Total Earnings", "\$8,750"),
+                            const SizedBox(height: 16),
+                            _buildEarningRow("Rides Completed", "52"),
+                            const SizedBox(height: 16),
+                            _buildEarningRow("Hours Online", "38.5"),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xff9C9B9F),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 16),
+                          child: Text(
+                            'Withdraw Earnings',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "ProximaNova",
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ],
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Today's Earnings",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 12),
-              Card(
-                elevation: 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      _buildEarningRow("Total Earnings", "\$1,250"),
-                      const Divider(height: 24),
-                      _buildEarningRow("Rides Completed", "8"),
-                      const Divider(height: 24),
-                      _buildEarningRow("Hours Online", "6.5"),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 24),
-              const Text(
-                "Recent Rides",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 12),
-              _buildRideCard("Ride #1234", "Today, 14:30", "\$180"),
-              const SizedBox(height: 8),
-              _buildRideCard("Ride #1233", "Today, 12:15", "\$150"),
-              const SizedBox(height: 24),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () => setState(() => isWeeklySelected = true),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: isWeeklySelected
-                            ? const Color(0xFF5A3FFF)
-                            : Colors.grey[400],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 12),
-                        child: Text(
-                          'Weekly',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () => setState(() => isWeeklySelected = false),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: !isWeeklySelected
-                            ? const Color(0xFF5A3FFF)
-                            : Colors.grey[400],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 12),
-                        child: Text(
-                          'Monthly',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              Card(
-                elevation: 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "This Week",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      _buildEarningRow("Total Earnings", "\$8,750"),
-                      const Divider(height: 24),
-                      _buildEarningRow("Rides Completed", "52"),
-                      const Divider(height: 24),
-                      _buildEarningRow("Hours Online", "38.5"),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 24),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey[400],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    child: Text(
-                      'Withdraw Earnings',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }
@@ -242,8 +267,7 @@ class EarningScreenState extends State<EarningScreen> {
   }
 
   Widget _buildRideCard(String title, String time, String amount) {
-    return Card(
-      elevation: 2,
+    return ShadowCard(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(

@@ -1,8 +1,13 @@
 import 'dart:io';
 
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:oncab/screens/DashboardScreen.dart';
+import 'package:oncab/screens/SignInScreen.dart';
+import 'package:oncab/utils/Colors.dart';
+import '../components/app_bar_container.dart';
+import '../components/shadow_card.dart';
 import '../model/ServiceModel.dart';
 import '../network/RestApis.dart';
 import '../utils/Extensions/StringExtensions.dart';
@@ -193,159 +198,194 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF5A3FFF),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
-          'Profile Screen',
-          style: TextStyle(color: Colors.white),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.more_vert),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
+      body: Column(
+        children: [
+          AppBarContainer(
+              child: Row(
             children: [
-              // Profile Card
-              Card(
-                elevation: 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      // Profile Image and Name
-                      Row(
-                        children: [
-                          const CircleAvatar(
-                            radius: 30,
-                            backgroundImage: NetworkImage(
-                              'https://placeholder.com/150x150',
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text(
-                                'David Martain',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                'Driver ID: DRV12345',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      // Stats Row
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          _buildStat('4.8', 'Rating'),
-                          _buildDivider(),
-                          _buildStat('523', 'Trips'),
-                          _buildDivider(),
-                          _buildStat('1280\$/Month', 'Average Earning'),
-                        ],
-                      ),
-                    ],
-                  ),
+              IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () => Navigator.pop(context),
+              ),
+              Spacer(),
+              const Text(
+                'Profile Screen',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "ProximaNova",
                 ),
               ),
-              const SizedBox(height: 24),
-
-              // Uploaded Documents Section
-              Card(
-                elevation: 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Uploaded Documents',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+              Spacer(),
+              IconButton(
+                  icon: const Icon(Icons.more_vert),
+                  onPressed: () {},
+                  color: Colors.white),
+            ],
+          )),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  bottom: 80,
+                  top: 16,
+                  left: 16,
+                  right: 16,
+                ),
+                child: Column(
+                  children: [
+                    // Profile Card
+                    ShadowCard(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          children: [
+                            // Profile Image and Name
+                            Row(
+                              children: [
+                                const CircleAvatar(
+                                  radius: 30,
+                                ),
+                                const SizedBox(width: 16),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: const [
+                                    Text(
+                                      'David Martain',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: "ProximaNova",
+                                      ),
+                                    ),
+                                    Text(
+                                      'Driver ID: DRV12345',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 14,
+                                        fontFamily: "ProximaNova",
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 20),
+                            // Stats Row
+                            DottedBorder(
+                              borderType: BorderType.RRect,
+                              radius: const Radius.circular(10),
+                              strokeWidth: 1,
+                              color: Colors.grey.withOpacity(0.3),
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    _buildStat('4.8', 'Rating'),
+                                    _buildStat('523', 'Trips'),
+                                    _buildStat(
+                                        '1280\$/Month', 'Average Earning'),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 16),
-                      _buildDocumentRow(
-                        'Driver\'s License',
-                        'Verified',
-                        Icons.description_outlined,
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Uploaded Documents Section
+                    ShadowCard(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Uploaded Documents',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: "ProximaNova",
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            _buildDocumentRow(
+                              'Driver\'s License',
+                              'Verified',
+                              Icons.description_outlined,
+                            ),
+                            const Divider(height: 24),
+                            _buildDocumentRow(
+                              'Vehicle Registration',
+                              'Verified',
+                              Icons.description_outlined,
+                            ),
+                            const Divider(height: 24),
+                            _buildDocumentRow(
+                              'Driver\'s License',
+                              'Pending',
+                              Icons.description_outlined,
+                              isPending: true,
+                            ),
+                          ],
+                        ),
                       ),
-                      const Divider(height: 24),
-                      _buildDocumentRow(
-                        'Vehicle Registration',
-                        'Verified',
-                        Icons.description_outlined,
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Settings Options
+                    _buildSettingsButton('Edit Profile',
+                        onTap: () {}, title: ''),
+                    const SizedBox(height: 12),
+                    _buildSettingsButton('Change Password',
+                        onTap: () {}, title: ''),
+                    const SizedBox(height: 12),
+                    _buildSettingsButton('Notification Settings',
+                        onTap: () {}, title: ''),
+                    const SizedBox(height: 24),
+
+                    // Log Out Button
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SignInScreen(),
+                            ),
+                            (route) => false,
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: primaryColor,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        child: const Text(
+                          'Log Out',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontFamily: "ProximaNova",
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
-                      const Divider(height: 24),
-                      _buildDocumentRow(
-                        'Driver\'s License',
-                        'Pending',
-                        Icons.description_outlined,
-                        isPending: true,
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 24),
-
-              // Settings Options
-              _buildSettingsButton('Edit Profile', onTap: () {}, title: ''),
-              const SizedBox(height: 12),
-              _buildSettingsButton('Change Password', onTap: () {}, title: ''),
-              const SizedBox(height: 12),
-              _buildSettingsButton('Notification Settings',
-                  onTap: () {}, title: ''),
-              const SizedBox(height: 24),
-
-              // Log Out Button
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF5A3FFF),
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  child: const Text(
-                    'Log Out',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -358,6 +398,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
+            fontFamily: "ProximaNova",
           ),
         ),
         const SizedBox(height: 4),
@@ -366,17 +407,10 @@ class EditProfileScreenState extends State<EditProfileScreen> {
           style: const TextStyle(
             color: Colors.grey,
             fontSize: 12,
+            fontFamily: "ProximaNova",
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildDivider() {
-    return Container(
-      height: 30,
-      width: 1,
-      color: Colors.grey.withOpacity(0.3),
     );
   }
 
@@ -384,19 +418,22 @@ class EditProfileScreenState extends State<EditProfileScreen> {
       {bool isPending = false}) {
     return Row(
       children: [
-        Icon(icon, color: Colors.grey, size: 20),
+        Icon(icon, color: primaryColor, size: 20),
         const SizedBox(width: 12),
         Expanded(
           child: Text(
             title,
-            style: const TextStyle(fontSize: 14),
+            style: const TextStyle(
+              fontSize: 14,
+              fontFamily: "ProximaNova",
+            ),
           ),
         ),
         Text(
-          status,
+          "Verified",
           style: TextStyle(
             fontSize: 14,
-            color: isPending ? Colors.orange : Colors.green,
+            fontFamily: "ProximaNova",
           ),
         ),
       ],
@@ -405,8 +442,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
 
   Widget _buildSettingsButton(String s,
       {required String title, required VoidCallback onTap}) {
-    return Card(
-      elevation: 2,
+    return ShadowCard(
       child: InkWell(
         onTap: onTap,
         child: Padding(
@@ -415,12 +451,17 @@ class EditProfileScreenState extends State<EditProfileScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                title,
-                style: const TextStyle(fontSize: 14),
+                s,
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "ProximaNova",
+                ),
               ),
               const Icon(
                 Icons.chevron_right,
-                color: Colors.grey,
+                color: Colors.black,
               ),
             ],
           ),

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:oncab/components/shadow_card.dart';
+import 'package:oncab/utils/Colors.dart';
+
+import '../components/app_bar_container.dart';
 
 class NavigationEndScreen extends StatelessWidget {
   const NavigationEndScreen({Key? key}) : super(key: key);
@@ -13,64 +17,44 @@ class NavigationEndScreen extends StatelessWidget {
             children: [
               // Map Container
               Container(
-                height: 280,
+                height: double.infinity,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF1A1B35), // Dark map background
                   image: DecorationImage(
-                    image: const AssetImage(
-                        'assets/map_dark.png'), // Replace with actual map
-                    fit: BoxFit.cover,
-                    colorFilter: ColorFilter.mode(
-                      Colors.blue.withOpacity(0.2),
-                      BlendMode.softLight,
-                    ),
-                  ),
+                      image: AssetImage('images/map_detail.png'),
+                      fit: BoxFit.cover,
+                      colorFilter: ColorFilter.mode(
+                          Colors.blue.withOpacity(0.3), BlendMode.darken)),
                 ),
               ),
-              // Custom AppBar
               Positioned(
                 top: 0,
                 left: 0,
                 right: 0,
-                child: SafeArea(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Colors.black.withOpacity(0.5),
-                          Colors.transparent,
-                        ],
+                child: AppBarContainer(
+                    child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back, color: Colors.white),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    Spacer(),
+                    const Text(
+                      'Navigation',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "ProximaNova",
                       ),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                          icon:
-                              const Icon(Icons.arrow_back, color: Colors.white),
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                        const Text(
-                          'Navigation',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        IconButton(
-                          icon:
-                              const Icon(Icons.more_vert, color: Colors.white),
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                    Spacer(),
+                    IconButton(
+                        icon: const Icon(Icons.more_vert),
+                        onPressed: () {},
+                        color: Colors.white),
+                  ],
+                )),
               ),
             ],
           ),
@@ -85,11 +69,7 @@ class NavigationEndScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     // Details Card
-                    Card(
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
+                    ShadowCard(
                       child: Padding(
                         padding: const EdgeInsets.all(16),
                         child: Column(
@@ -100,6 +80,7 @@ class NavigationEndScreen extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
+                                fontFamily: "ProximaNova",
                               ),
                             ),
                             const SizedBox(height: 16),
@@ -127,6 +108,7 @@ class NavigationEndScreen extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500,
+                                        fontFamily: "ProximaNova",
                                       ),
                                     ),
                                     SizedBox(height: 4),
@@ -135,6 +117,7 @@ class NavigationEndScreen extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.grey,
+                                        fontFamily: "ProximaNova",
                                       ),
                                     ),
                                   ],
@@ -169,15 +152,16 @@ class NavigationEndScreen extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {},
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF5A3FFF),
+                            backgroundColor: primaryColor,
                             padding: const EdgeInsets.symmetric(vertical: 16),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(30),
                             ),
                           ),
                           child: const Text(
                             'End Ride',
                             style: TextStyle(
+                              fontFamily: "ProximaNova",
                               color: Colors.white,
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
@@ -205,12 +189,14 @@ class NavigationEndScreen extends StatelessWidget {
           style: const TextStyle(
             fontSize: 14,
             color: Colors.grey,
+            fontFamily: "ProximaNova",
           ),
         ),
         Text(
           value,
           style: TextStyle(
             fontSize: isAmount ? 16 : 14,
+            fontFamily: "ProximaNova",
             fontWeight: isAmount ? FontWeight.w600 : FontWeight.w500,
           ),
         ),

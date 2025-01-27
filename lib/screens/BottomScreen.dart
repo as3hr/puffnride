@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:oncab/screens/DashboardScreen.dart';
-import 'package:oncab/screens/RidesListScreen.dart';
 // ignore: unused_import
 import 'package:oncab/screens/WalletScreen.dart';
 import 'package:oncab/screens/EarningScreen.dart';
@@ -36,7 +34,7 @@ class _BottomScreenState extends State<BottomScreen> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     DriverDashboardScreen(),
-    DashboardScreen(),
+    // DashboardScreen(),
     EarningScreen(),
     SupSupportScreen(),
     EditProfileScreen(),
@@ -51,38 +49,46 @@ class _BottomScreenState extends State<BottomScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _widgetOptions[_selectedIndex],
-      bottomNavigationBar: Container(
-        width: double.infinity,
-        height: 66,
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-        decoration: BoxDecoration(
-          color: primaryColor,
-          borderRadius: BorderRadius.circular(19),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.25),
-              blurRadius: 17.1,
-              offset: const Offset(0, 9),
+      body: Stack(
+        children: [
+          _widgetOptions[_selectedIndex],
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              width: double.infinity,
+              height: 66,
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+              decoration: BoxDecoration(
+                color: primaryColor,
+                borderRadius: BorderRadius.circular(19),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.25),
+                    blurRadius: 17.1,
+                    offset: const Offset(0, 9),
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _buildNavItem(0, "images/home.png", 'Home'),
+                  _buildNavItem(1, "images/earnings.png", 'Earnings'),
+                  _buildNavItem(2, "images/support.png", 'Support'),
+                  _buildNavItem(3, "images/profile.png", 'Profile'),
+                ],
+              ),
             ),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildNavItem(0, Icons.home_rounded, 'Home'),
-            _buildNavItem(1, Icons.local_taxi_rounded, 'Book a Ride'),
-            _buildNavItem(2, Icons.donut_large_rounded, 'Earnings'),
-            _buildNavItem(3, Icons.headset_mic_rounded, 'Support'),
-            _buildNavItem(4, Icons.person_rounded, 'Profile'),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildNavItem(int index, IconData icon, String label) {
+  Widget _buildNavItem(int index, String icon, String label) {
     final isSelected = _selectedIndex == index;
 
     return GestureDetector(
@@ -90,10 +96,9 @@ class _BottomScreenState extends State<BottomScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
+          Image.asset(
             icon,
-            color: Colors.white,
-            size: 21.88, // Set icon size
+            color: isSelected ? Color(0xffBB29FF) : Colors.white,
           ),
           const SizedBox(height: 4),
           Text(

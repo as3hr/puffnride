@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:oncab/components/shadow_card.dart';
+import 'package:oncab/utils/Colors.dart';
 
+import '../components/app_bar_container.dart';
 import '../utils/Constants.dart';
 import 'package:oncab/screens/NavigationScreen.dart';
 
@@ -21,75 +24,63 @@ class RidesListScreenState extends State<RidesListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: Stack(
         children: [
-          // Map Section with AppBar
-          Stack(
-            children: [
-              // Map Container
-              Container(
-                height: 200,
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(
-                        'https://placeholder.com/map'), // Replace with actual map
-                    fit: BoxFit.cover,
+          // Map Container
+          Container(
+            height: double.infinity,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('images/map_detail.png'),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                      Colors.blue.withOpacity(0.3), BlendMode.darken)),
+            ),
+          ),
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: AppBarContainer(
+                child: Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.arrow_back, color: Colors.white),
+                  onPressed: () => Navigator.pop(context),
+                ),
+                Spacer(),
+                const Text(
+                  'Ride Details',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "ProximaNova",
                   ),
                 ),
-              ),
-              // Custom AppBar
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                child: SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                          icon:
-                              const Icon(Icons.arrow_back, color: Colors.white),
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                        const Text(
-                          'Ride Details',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        IconButton(
-                          icon:
-                              const Icon(Icons.more_vert, color: Colors.white),
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
+                Spacer(),
+                IconButton(
+                    icon: const Icon(Icons.more_vert),
+                    onPressed: () {},
+                    color: Colors.white),
+              ],
+            )),
           ),
 
           // Content Section
-          Expanded(
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
             child: Container(
+              height: MediaQuery.of(context).size.height * 0.6,
               color: const Color(0xFFF5F5F5),
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Rider Info Card
-                    Card(
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
+                    ShadowCard(
                       child: Padding(
                         padding: const EdgeInsets.all(16),
                         child: Column(
@@ -99,8 +90,6 @@ class RidesListScreenState extends State<RidesListScreen> {
                               children: [
                                 const CircleAvatar(
                                   radius: 24,
-                                  backgroundImage: NetworkImage(
-                                      'https://placeholder.com/user'),
                                 ),
                                 const SizedBox(width: 12),
                                 Expanded(
@@ -113,6 +102,7 @@ class RidesListScreenState extends State<RidesListScreen> {
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500,
+                                          fontFamily: "ProximaNova",
                                         ),
                                       ),
                                       SizedBox(height: 4),
@@ -121,6 +111,7 @@ class RidesListScreenState extends State<RidesListScreen> {
                                         style: TextStyle(
                                           color: Colors.grey,
                                           fontSize: 14,
+                                          fontFamily: "ProximaNova",
                                         ),
                                       ),
                                     ],
@@ -132,15 +123,8 @@ class RidesListScreenState extends State<RidesListScreen> {
                             // Pickup Location
                             Row(
                               children: [
-                                Container(
-                                  padding: const EdgeInsets.all(4),
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[200],
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: const Icon(Icons.location_on,
-                                      size: 16, color: Colors.grey),
-                                ),
+                                Image.asset("images/pin.png",
+                                    color: Colors.grey),
                                 const SizedBox(width: 12),
                                 Expanded(
                                   child: Column(
@@ -149,7 +133,10 @@ class RidesListScreenState extends State<RidesListScreen> {
                                     children: const [
                                       Text(
                                         '123 Pickup Street, City',
-                                        style: TextStyle(fontSize: 14),
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontFamily: "ProximaNova",
+                                        ),
                                       ),
                                       SizedBox(height: 2),
                                       Text(
@@ -157,6 +144,7 @@ class RidesListScreenState extends State<RidesListScreen> {
                                         style: TextStyle(
                                           color: Colors.grey,
                                           fontSize: 12,
+                                          fontFamily: "ProximaNova",
                                         ),
                                       ),
                                     ],
@@ -168,15 +156,8 @@ class RidesListScreenState extends State<RidesListScreen> {
                             // Dropoff Location
                             Row(
                               children: [
-                                Container(
-                                  padding: const EdgeInsets.all(4),
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[200],
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: const Icon(Icons.location_on,
-                                      size: 16, color: Colors.grey),
-                                ),
+                                const Icon(Icons.location_on,
+                                    size: 16, color: Colors.grey),
                                 const SizedBox(width: 12),
                                 Expanded(
                                   child: Column(
@@ -185,7 +166,10 @@ class RidesListScreenState extends State<RidesListScreen> {
                                     children: const [
                                       Text(
                                         '455 Dropoff Avenue, Town',
-                                        style: TextStyle(fontSize: 14),
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontFamily: "ProximaNova",
+                                        ),
                                       ),
                                       SizedBox(height: 2),
                                       Text(
@@ -193,6 +177,7 @@ class RidesListScreenState extends State<RidesListScreen> {
                                         style: TextStyle(
                                           color: Colors.grey,
                                           fontSize: 12,
+                                          fontFamily: "ProximaNova",
                                         ),
                                       ),
                                     ],
@@ -207,11 +192,7 @@ class RidesListScreenState extends State<RidesListScreen> {
                     const SizedBox(height: 16),
 
                     // Ride Details Card
-                    Card(
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
+                    ShadowCard(
                       child: Padding(
                         padding: const EdgeInsets.all(16),
                         child: Column(
@@ -221,14 +202,15 @@ class RidesListScreenState extends State<RidesListScreen> {
                               'Ride Details',
                               style: TextStyle(
                                 fontSize: 16,
+                                fontFamily: "ProximaNova",
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
                             const SizedBox(height: 16),
                             _buildDetailRow('Distance', '7.5 miles'),
-                            const Divider(height: 24),
+                            const SizedBox(height: 16),
                             _buildDetailRow('Estimated Time', '45 minutes'),
-                            const Divider(height: 24),
+                            const SizedBox(height: 16),
                             _buildDetailRow('Fare', '\$25.50'),
                           ],
                         ),
@@ -241,60 +223,67 @@ class RidesListScreenState extends State<RidesListScreen> {
           ),
 
           // Bottom Buttons
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              NavigationScreen(), // Replace with your screen class
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                NavigationScreen(), // Replace with your screen class
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColor,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
                         ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF5A3FFF),
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
                       ),
-                    ),
-                    child: const Text(
-                      'Start Ride',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
+                      child: const Text(
+                        'Start Ride',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "ProximaNova",
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey[400],
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey[400],
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
                       ),
-                    ),
-                    child: const Text(
-                      'End Ride',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
+                      child: const Text(
+                        'End Ride',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontFamily: "ProximaNova",
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
@@ -309,6 +298,7 @@ class RidesListScreenState extends State<RidesListScreen> {
         Text(
           label,
           style: const TextStyle(
+            fontFamily: "ProximaNova",
             fontSize: 14,
             color: Colors.grey,
           ),
@@ -317,6 +307,7 @@ class RidesListScreenState extends State<RidesListScreen> {
           value,
           style: const TextStyle(
             fontSize: 14,
+            fontFamily: "ProximaNova",
             fontWeight: FontWeight.w500,
           ),
         ),

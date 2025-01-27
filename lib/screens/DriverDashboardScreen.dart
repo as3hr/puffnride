@@ -3,13 +3,14 @@ import 'package:oncab/components/app_bar_container.dart';
 import 'package:oncab/components/shadow_card.dart';
 import 'package:oncab/utils/Colors.dart';
 
+import 'RideDetailScreen.dart';
+
 class DriverDashboardScreen extends StatelessWidget {
   const DriverDashboardScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
       body: Column(
         children: [
           AppBarContainer(
@@ -44,7 +45,12 @@ class DriverDashboardScreen extends StatelessWidget {
           )),
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.only(
+                bottom: 80,
+                top: 16,
+                left: 16,
+                right: 16,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -58,91 +64,103 @@ class DriverDashboardScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  ShadowCard(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                'New Ride Request',
-                                style: TextStyle(
-                                  fontFamily: "ProximaNova",
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w500,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RideDetailScreen(
+                            orderId: 1,
+                          ),
+                        ),
+                      );
+                    },
+                    child: ShadowCard(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  'New Ride Request',
+                                  style: TextStyle(
+                                    fontFamily: "ProximaNova",
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
+                                Container(
+                                  child: Center(
+                                    child: Text(
+                                      '2 min ago',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontFamily: "ProximaNova",
+                                      ),
+                                    ),
+                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 2),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Color(0xffD9D9D9),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Text(
+                              'John D. - 3.2 miles away',
+                              style: TextStyle(
+                                fontFamily: "ProximaNova",
+                                fontSize: 13,
+                                fontWeight: FontWeight.w300,
                               ),
-                              Container(
-                                child: Center(
+                            ),
+                            const SizedBox(height: 12),
+                            Row(
+                              children: [
+                                Spacer(),
+                                OutlinedButton(
+                                  onPressed: () {},
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Color(0xff958F8F),
+                                    side: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
                                   child: Text(
-                                    '2 min ago',
+                                    'Decline',
                                     style: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w500,
                                       fontFamily: "ProximaNova",
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 2),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Color(0xffD9D9D9),
+                                const SizedBox(width: 12),
+                                ElevatedButton(
+                                  onPressed: () {},
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: primaryColor,
+                                  ),
+                                  child: const Text(
+                                    'Accept',
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: "ProximaNova",
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          const Text(
-                            'John D. - 3.2 miles away',
-                            style: TextStyle(
-                              fontFamily: "ProximaNova",
-                              fontSize: 13,
-                              fontWeight: FontWeight.w300,
+                              ],
                             ),
-                          ),
-                          const SizedBox(height: 12),
-                          Row(
-                            children: [
-                              Spacer(),
-                              OutlinedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xff958F8F),
-                                  side: BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                                child: Text(
-                                  'Decline',
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: "ProximaNova",
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 12),
-                              ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: primaryColor,
-                                ),
-                                child: const Text(
-                                  'Accept',
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: "ProximaNova",
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -345,33 +363,45 @@ class DriverDashboardScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                      ),
-                      child: const Text(
-                        'Emergency Alert',
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: "ProximaNova",
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
                   ShadowCard(
-                    child: ListTile(
-                      title: const Text('Service Chat'),
-                      trailing: const Icon(Icons.chevron_right),
-                      onTap: () {},
+                      child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.black,
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                            ),
+                            child: const Text(
+                              'Emergency Alert',
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: "ProximaNova",
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        ListTile(
+                          title: Text(
+                            'Service Chat',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: "ProximaNova",
+                            ),
+                          ),
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: () {},
+                        ),
+                      ],
                     ),
-                  ),
+                  )),
 
                   // Analytics & Reporting
                   const SizedBox(height: 24),
@@ -380,6 +410,7 @@ class DriverDashboardScreen extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
+                      fontFamily: "ProximaNova",
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -387,20 +418,60 @@ class DriverDashboardScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         ListTile(
-                          title: const Text('Ride Acceptance Rate'),
-                          trailing: const Text('95%'),
+                          title: const Text(
+                            'Ride Acceptance Rate',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "ProximaNova",
+                            ),
+                          ),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              LinearProgressIndicator(
+                                color: primaryColor,
+                                value: 0.95,
+                                minHeight: 10,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              const SizedBox(height: 2),
+                              const Text(
+                                '95%',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "ProximaNova",
+                                ),
+                              ),
+                            ],
+                          ),
                           onTap: () {},
                         ),
-                        const Divider(height: 1),
+                        const SizedBox(height: 2),
                         ListTile(
-                          title: const Text('Average Rating'),
-                          trailing: Row(
+                          title: const Text(
+                            'Average Rating',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "ProximaNova",
+                            ),
+                          ),
+                          subtitle: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Text('4.8'),
+                              ...List.generate(
+                                4,
+                                (index) => Icon(
+                                  Icons.star,
+                                  color: Colors.black,
+                                  size: 16,
+                                ),
+                              ),
+                              Icon(Icons.star_border, size: 16),
                               const SizedBox(width: 4),
-                              Icon(Icons.star,
-                                  size: 16, color: Colors.amber[700]),
+                              const Text('4.8'),
                             ],
                           ),
                           onTap: () {},
