@@ -17,7 +17,7 @@ class SupSupportScreen extends StatelessWidget {
             children: [
               IconButton(
                 icon: const Icon(Icons.arrow_back, color: Colors.white),
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => {},
               ),
               Spacer(),
               const Text(
